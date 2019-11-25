@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,16 @@
     <title>OCR-web_service</title>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <style>
+        div, p, textarea {
+            margin: 0;
+            padding: 0;
+        }
+
         .wrap {
             margin: 0 auto;
         }
         .content {
+            display: inline-block;
             outline: 2px dashed #92b0b3 ;
             outline-offset:-10px;  
             text-align: center;
@@ -23,7 +29,12 @@
             width:100%;
             height:100%;
             display:none;
-        }       
+        }
+        #ocr-textdata {
+            height: 298px;
+            border: 1px solid black;
+            resize: none;
+        }
     </style>
 </head>
 <body>
@@ -31,7 +42,9 @@
         <p>OCR-web_service</p>
         <div class="content">
         </div>
-        <a class="ui-shadow ui-btn ui-corner-all" href="javascript:uploadServer();">전송</a>
+        <textarea id="ocr-textdata" rows="5" cols="33" placeholder="변환된 텍스트가 올 영역입니다.">
+        </textarea>
+        <a class="ui-button" href="javascript:uploadServer();">전송</a>
     </div>
     <script>
         $('.content')
