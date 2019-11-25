@@ -31,10 +31,11 @@ function uploadFiles(e) {
         return;
     }
     if (files[0].type.match(/image.*/)) {
-                $(e.target).css({
-            "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-            "outline": "none",
-            "background-size": "100% 100%"
+            $(e.target).css({
+                    "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                    "outline": "none",
+                    "background-size": "inherit"
+                    //"background-size": "100% 100%"
         });
     }else{
       alert('이미지가 아닙니다.');
