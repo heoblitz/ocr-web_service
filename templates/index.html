@@ -7,18 +7,31 @@
     <title>OCR-web_service</title>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <style>
-        div, p, textarea {
+        html, body, div, p, textarea, h3 {
             margin: 0;
             padding: 0;
         }
-
-        .wrap {
+        .header {
+            min-width: 500px;
+            background-color: black;
+            color: white;
+        }
+        .header .header-title {
+            padding: 8px 0px;
+            padding-left: 20px;
+            width: 480px;
             margin: 0 auto;
         }
+        .wrap {
+            margin: 0 auto;
+            padding: 20px;
+            width: 500px;
+        }
         .content {
-            display: inline-block;
-            outline: 2px dashed #92b0b3 ;
-            outline-offset:-10px;  
+            float: left;
+            margin-right: 15px;
+            outline: 2px dashed #92b0b3;
+            outline-offset: -10px;  
             text-align: center;
             transition: all .15s ease-in-out;
             width: 300px;
@@ -30,22 +43,61 @@
             height:100%;
             display:none;
         }
+        p {
+            margin-top: 30px;
+        }
+        p:first-child{
+            margin-top: 0;
+        }
+        .option-box {
+            float: left;
+            width: 100px;
+        }
+        .option-title {
+            width: 200px;
+        }
+        .send {
+            display: inline-block;
+            margin-top: 195px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background-color: black;
+            width: 100px;
+        }
         #ocr-textdata {
-            height: 298px;
+            margin-top: 15px;
+            padding: 5px;
+            width: 413px;
+            height: 150px;
             border: 1px solid black;
             resize: none;
         }
+
     </style>
 </head>
 <body>
+    <div class="header">
+        <h3 class="header-title">OCR-web_service</h3>
+    </div>
     <div class="wrap">
-        <p>OCR-web_service</p>
         <div class="content">
         </div>
-        <textarea id="ocr-textdata" rows="5" cols="33" placeholder="변환된 텍스트가 올 영역입니다.">
-        </textarea>
-        <a class="ui-button" href="javascript:uploadServer();">전송</a>
-    </div>
+        <div class="option-box">
+            <p>언어 설정</p>
+            <select name="lang" class="option-box">
+                <option value="eng">영어</option>
+                <option value="kor">한국어</option>
+                <option value="all">영어+한국어</option>
+            </select>
+            <p>정확도 옵션</p>
+            <select name="opencv" class="option-box">
+                <option value="default">사용하지 않음</option>
+                <option value="greyscal">그레이 스케일</option>
+            </select>
+            <a class="send" href="javascript:uploadServer();">OCR 변환</a>
+        </div>
+        <textarea id="ocr-textdata" rows="5" cols="33" placeholder="변환된 텍스트가 올 영역입니다.">{{output}}</textarea>
     <script>
         $('.content')
         .on("dragover", dragOver)
@@ -88,12 +140,14 @@
                     $(e.target).css({
                     "background-image": "url(" + IMG + ")",
                     "outline": "none",
-                    "background-size": "cover"
+                    "background-size": "contain",
+                    "background-repeat": "no-repeat",
+                    "background-position": "center"
                     //"background-size": "cover"
                     //"background-size": "300px 300px"
                 });
             }
-            else{
+            else {
               alert('이미지가 아닙니다.');
               return;
             }
@@ -101,10 +155,11 @@
 
         function uploadServer(){
                 //var form = FILE;
-                var formData = new FormData();
-                formData.append("file", FILE);
-                $.ajax({
-                    url: '/upload',
+                if(FILE){
+                    var formData = new FormData();
+                    formData.append("file", FILE);
+                    $.ajax({
+                        url: '/upload',
                             processData: false,
                             contentType: false,
                             data: formData,
@@ -112,7 +167,16 @@
                             success: function(result){
                                 alert("업로드 성공!!");
                             }
-                    });
+                        });
+                }
+                else {
+                    alert('이미지를 먼저 업로드 해주세요.');
+                }
+    
+        }
+
+        function getServer(){
+
         }
     </script>
 </body>
