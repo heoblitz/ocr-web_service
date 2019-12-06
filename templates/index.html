@@ -85,13 +85,13 @@
         </div>
         <div class="option-box">
             <p>언어 설정</p>
-            <select name="lang" class="option-box">
+            <select name="lang" id="lang" class="option-box">
                 <option value="eng">영어</option>
                 <option value="kor">한국어</option>
                 <option value="all">영어+한국어</option>
             </select>
             <p>정확도 옵션</p>
-            <select name="opencv" class="option-box">
+            <select name="opencv" id="opencv" class="option-box">
                 <option value="default">사용하지 않음</option>
                 <option value="greyscal">그레이 스케일</option>
             </select>
@@ -156,16 +156,25 @@
         function uploadServer(){
                 //var form = FILE;
                 if(FILE){
+                    var lang = $("#lang option:selected").val();
+                    var opencv = $("#opencv option:selected").val();
                     var formData = new FormData();
+
                     formData.append("file", FILE);
+                    formData.append("lang", lang);
+                    formData.append("opencv", opencv);
                     $.ajax({
                         url: '/upload',
                             processData: false,
                             contentType: false,
                             data: formData,
                             type: 'POST',
-                            success: function(result){
-                                alert("업로드 성공!!");
+                            success: function(response){
+                                alert("업로드 성공");
+
+                                if(response){
+                                    $("#ocr-textdata").val(response);
+                                }
                             }
                         });
                 }
@@ -173,10 +182,6 @@
                     alert('이미지를 먼저 업로드 해주세요.');
                 }
     
-        }
-
-        function getServer(){
-
         }
     </script>
 </body>
