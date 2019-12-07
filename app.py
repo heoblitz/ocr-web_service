@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask import redirect, url_for
 from werkzeug.utils import secure_filename
-import argv
+import ocr
 import sys # print log 찍기용
 #print('This is error output', file=sys.stderr)
 #import argv
@@ -35,12 +35,12 @@ def get_ocr():
     lang = request.args.get('lang')
     opencv = request.args.get('opencv')
 
-    ocr = argv.OcrParser(file_name, lang)
+    text = ocr.OcrParser(file_name, lang)
 
     #print('lang {}'.format(lang), file=sys.stderr)
     #print('ocr_data {}'.format(opencv), file=sys.stderr)
     
-    return ocr.img2text()
+    return text.img2text()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
