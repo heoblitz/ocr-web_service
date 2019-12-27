@@ -19,3 +19,11 @@ pip install flask
 pip install pytesseract
 pip install python-opencv
 ```
+
+## How to run
+```bash
+git clone https://github.com/wone2287/ocr-web_service.git
+cd ocr-web_service
+flask run
+```
+and Running server on http://127.0.0.1:5000
